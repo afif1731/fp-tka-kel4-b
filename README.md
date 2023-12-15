@@ -23,6 +23,7 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
   ![Screenshot 2023-12-15 094659](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/502b2b63-6d21-4ecd-81f4-b86bca61ee81)
 
 - Kami menggunakan Digital Ocean sebagai lingkungan cloud yang akan kami gunakan. Berikut adalah tabel harga spesifikasi VM yang kami buat:
+  ![Screenshot 2023-12-15 145536](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/7efc5c94-4537-4f96-8a5f-2cc3e063e498)
 
 ### Langkah Implementasi
 
@@ -35,7 +36,6 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
 - Create new connection
   ![Screenshot 2023-12-15 093746](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/76641009-436b-4057-b05f-14a7132cb20f)
 
--
 
 ### Pengujian Endpoint
 
@@ -55,5 +55,16 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
   ![Screenshot 2023-12-15 094354](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/37004177-3a40-4c46-90ca-d1181559e2f2)
 
 ### Loadtesting menggunakan Locust
+- Peak Concurency: 5000
+  Spawn Rate: 25
+  ![Screenshot 2023-12-15 145823](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/2a447ab8-8b59-45d1-bdde-41e7d1f6a355)
+- Peak Concurency: 10000
+  Spawn Rate: 25
+  ![Screenshot 2023-12-15 150017](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/e3aa46ad-6a1c-4584-be62-fc4ceb023d20)
+- Peak Concurency: 10000
+  Spawn Rate: 50
+  ![Screenshot 2023-12-15 150108](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/02da8199-e562-4beb-b97b-e244b6db73ec)
+- Peak Concurency: 10000
+  Spawn Rate: 100
+  ![Screenshot 2023-12-15 150150](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/4aa11380-0b57-4c23-8c65-393621a03a0d)
 
-lorem ipsum dll
