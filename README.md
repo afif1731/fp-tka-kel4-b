@@ -205,7 +205,8 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
     }
   }
   ```
-
+  `165.232.170.202:80` merupakan alamat worker1 kami dan `159.223.66.135:80` merupakan alamat worker2
+  
   Service Nginx kemudian dimatikan dan dinyalakan ulang dengan perintah berikut:
   ```
   systemctl stop nginx
