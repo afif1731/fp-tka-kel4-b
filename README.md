@@ -246,16 +246,53 @@ Semua pengujian diarahkan pada ip yang sama, yaitu `157.245.147.229`
   ![Screenshot 2023-12-15 094354](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/37004177-3a40-4c46-90ca-d1181559e2f2)
 
 ### Loadtesting menggunakan Locust
-- Peak Concurency: 5000
+- **Test 1**
+
+  Peak Concurency: 5000
+
   Spawn Rate: 25
+
   ![Screenshot 2023-12-15 145823](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/2a447ab8-8b59-45d1-bdde-41e7d1f6a355)
-- Peak Concurency: 10000
+
+  Hasil:
+    + Highest RPS: 78,9
+  
+- **Test 2**
+
+  Peak Concurency: 10000
+
   Spawn Rate: 25
+
   ![Screenshot 2023-12-15 150017](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/e3aa46ad-6a1c-4584-be62-fc4ceb023d20)
-- Peak Concurency: 10000
+
+  Hasil:
+    + Peak Concurrency before failure: 800
+  
+- **Test 3**
+
+  Peak Concurency: 10000
+
   Spawn Rate: 50
+
   ![Screenshot 2023-12-15 150108](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/02da8199-e562-4beb-b97b-e244b6db73ec)
-- Peak Concurency: 10000
+
+  Hasil:
+    + Peak Concurrency before failure: 950
+  
+- **Test 4**
+
+  Peak Concurency: 10000
+
   Spawn Rate: 100
+
   ![Screenshot 2023-12-15 150150](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/4aa11380-0b57-4c23-8c65-393621a03a0d)
 
+  Hasil:
+    + Peak Concurrency before failure: 1300
+
+### Kesimpulan
+
+- Pengujian dengan Locust menunjukkan bahwa failure memiliki kemungkinan besar terjadi ketika jumlah user barada di antara 800 - 1000
+
+- Arsitektur Awan dengan spesifikasi sedemikian masih tidak sanggup untuk menghadapi 1000 user sekaligus
+  
