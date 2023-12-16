@@ -81,6 +81,94 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
     ![compass_res](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes2.png)
 
   Kemudian dibuat sebuah database baru sesuai dengan ketentuan soal FP dengan nama **orders_db** beserta collection **orders**. Database juga diisi dengan sejumlah dummy data yang dapat dibuat dari berbagai sumber di internet, salah satunya adalah melalui [Mockaroo](mockaroo.com).
+
+- App Workers
+
+  Droplet app worker dibuat menggunakan image Ubuntu versi 22.04 (LTS) sebanyak dua buah. Meskipun droplet worker1 dan worker2 yang kami gunakan memiliki spesifikasi yang berbeda, konfigurasi yang dilakukan tetaplah sama. Cara masuk ke console worker tidak berbeda dengan database, cukup dengan menggunakan perintah `ssh`.
+
+  Berikut merupakan langkah - langkah mengatur droplet worker
+
+  + Setelah masuk ke console, buatlah file bernama `app.py` dengan isi berupa salinan [app.py](https://github.com/fuaddary/fp-tka/blob/main/app.py) dari soal FP.
+
+    String yang digunakan pada app diubah menjadi string yang kita gunakan untuk mengakses database sebelumnya, namun dengan memberi tambahan '/users_db?authSource=admin' agar app.py dapat melakukan autentikasi sekaligus terhubung dengan database users_db. Isi dari `app.py` akan menjadi seperti berikut:
+
+    ![isi_apppy](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/apppyisi.png)
+
+  + Membuat file `gunicorn_config.py`
+
+    `gunicorn` ini digunakan untuk menjalankan app.py secara daemon. Dengan demikian, kita dapat mengakses app.py meskipun console ditutup. Isi dari file `gunicorn_config.py` adalah sebagai berikut:
+
+    ```
+    # ini config gunicorn
+    import os
+
+    workers = int(os.environ.get('GUNICORN_PROCESSES', '2'))
+
+    threads = int(os.environ.get('GUNICORN_THREADS', '4'))
+
+    bind = os.environ.get('GUNICORN_BIND', '0.0.0.0:80')
+
+    forwarded_allow_ips = '<YOUR LOAD BALANCER IPv4>' # Digunakan agar tidak semua orang dapat mengakses app.py ini
+
+    secure_scheme_headers = { 'X-Forwarded-Proto': 'http' }
+    ```
+
+  + Mencatat keperluan di `requirement.txt`
+
+    Agar penginstallan dependensi python yang diperlukan dapat dilakukan secara langsung maka semua dependensi dicatat pada satu buah file bernama `requirement.txt`, hal ini juga berguna apabila suatu saat terjadi error dan semua dependensi terhapus. Dependensi yang perlu dicatat pada file antara lain adalah sebagai berikut:
+
+    ```
+    Flask
+    flask_pymongo
+    bson
+    gunicorn
+    ```
+
+  + Memasang firewall
+
+    Ketika app.py nantinya dijalankan, sistem akan mendengarkan request akses dari IP manapun, termasuk dari IP yang tidak kita kenal sekalipun. Karena app.py kita terhubung dengan database, kita perlu memasang pelindung agar database kita tidak dibanjiri dengan data asing serta menghindari penghapusan dari pengguna tak dikenal. Firewall dipasang dari Digital Ocean dengan detail sebagai berikut:
+
+    ![firewall_app](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/firewallapp.png)
+
+    IP `157.245.147.229` adalah IP dari load balancer kami, sementara IP lainnya merupakan IPv4 dari laptop user yang saat itu sedang membuat app worker. IP milik kita sendiri dapat dicari melalui situs [https://whatismyipaddress.com](https://whatismyipaddress.com). namun IPv4 kita selalu berubah setiap beberapa jam, sehingga apabila ingin menambahkan IP kita sendiri ke firewall, kita harus melakukan update setiap kali ip kita berubah.
+
+  + Menjalankan `app.py`
+
+    Sebelum menjalankan aplikasi python ini, kami menggunakan virtual environment untuk menginstall dependensi yang diperlukan pada lingkungan yang terisolasi, dengan demikian error yang mungkin terjadi dari dependensi yang diinstall dapat direset cukup dengan menghapus virtual environment. Berikut merupakan rincian kami dalam membuat dan menggunakan virtual environment python
+
+    - Menginstall `venv`
+      
+      ```
+      sudo apt install python3-venv
+      ```
+
+    - Membuat virtual environment
+
+      ```
+      venv flaskapp
+      ```
+      nantinya akan muncul sebuah direktori bernama `flaskapp`
+
+    - Menggunakan virtual environment
+
+      ```
+      source flaskapp/bin/activate
+      ```
+      nantinya sebelum tulisan root@ip pada input akan terdapat tambahan '**(flaskapp)**'
+
+    Setelah virtual environment digunakan, install semua dependensi yang ada di `requirement.txt`
+    ```
+    pip3 install -r requirement.txt
+    ```
+    Begitu dependensi selesai diinstall, maka app.py sudah siap untuk dijalankan.
+
+
+    Untuk menjalankan `app.py` gunakan perintah berikut, tambahan `-D` tidak perlu digunakan agar aplikasi tidak berjalan secara daemon, hal ini digunakan agar saat testing kami dapat melakukan debugging dengan mudah.
+    ```
+    gunicorn --config gunicorn_config.py -D app:app
+    ```
+    
+      
    
 ### Pengujian Endpoint
 
