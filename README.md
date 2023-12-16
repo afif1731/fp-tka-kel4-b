@@ -37,7 +37,49 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
 - MongoDB database
   ![Screenshot 2023-12-15 093746](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/76641009-436b-4057-b05f-14a7132cb20f)
 
+### Langkah Pembuatan
 
+- MongoDB database
+
+  Sesuai dengan yang tertera pada tabel spesifikasi di atas, kami membuat droplet dengan image MongoDB serta spesifikasi yang telah ditentukan sebelumnya
+
+  ![create_mongo](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/createmongo.png)
+
+  image MongoDB yang tersedia di Digital Ocean merupakan VM ubuntu yang telah terinstall mongodb di dalamnya. Tak hanya itu, instalasi mongodb yang ada juga disertai dengan akun admin yang digunakan untuk mengakses database dari manapun. Keamanan image ini juga cukup terjamin karena secara default sistem akan memblokir semua port selain 80 (http), 443 (https), dan juga 27017 (mongodb). Namun supaya lebih meyakinkan, kami juga menambahkan firewall tambahan dari Digital Ocean pada droplet ini sehingga database hanya dapat diakses melalui port 22 dan 27017 saja.
+
+  ![firewall_db](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/firewalldb.png)
+
+  Setelah droplet dibuat, maka akan didapat address IPv4 dari droplet tersebut, IP tersebut digunakan untuk masuk ke dalam console droplet. Caranya cukup dengan menjalankan perintah berikut pada cmd ataupun terminal semacam:
+
+  ```
+  ssh root@<your_IPv4>
+  ```
+  Apabila droplet diatur menggunakan password, maka console kemudian juga akan meminta input password sebelum kemudian kita dapat masuk ke dalam console droplet.
+
+  Setelah masuk ke dalam console droplet, maka kita seharusnya mendapat pesan seperti ini
+
+  ![mongo_console](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/mongoconsole.png)
+
+  Pesan juga akan menampilkan password admin yang digunakan untuk mengakses database. Perlu diperhatikan agar password tersebut tidak terpublikasi.
+
+  Untuk memeriksa apakah database sudah berjalan, dilakukan percobaan akses menggunakan dua cara. Yaitu dengan menggunakan `mongosh` dan `MongoDB Compass`
+
+  + `mongosh`
+    Cukup masukkan perintah `mongosh` ke dalam console droplet. Apabila kemudian muncul text `test` pada bagian input, maka hal itu menunjukkan bahwa koneksi sudah berhasil dan kita sedang mengakses database `test`
+
+    ![mongosh_tes](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/mongoshtes.png)
+
+  + `MongoDB Compass`
+    Untuk menggunakan compass, pastikan aplikasi **MongoDB Compass** sudah terinstall sebelumnya. Apabila telah terinstall, buat koneksi baru dan masukkan string link akses database yang sebelumnya ditunjukkan pada pesan login console
+
+   ![compass_tes](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes.png)
+
+   Apabila sudah berhasil terhubung, maka tampilan seharusnya berupa seperti ini
+
+   ![compass_res](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes2.png)
+
+  Kemudian dibuat sebuah database baru sesuai dengan ketentuan soal FP dengan nama **orders_db** beserta collection **orders**. Database juga diisi dengan sejumlah dummy data yang dapat dibuat dari berbagai sumber di internet, salah satunya adalah melalui [Mockaroo](mockaroo.com).
+   
 ### Pengujian Endpoint
 
 - Get All Orders
