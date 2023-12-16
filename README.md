@@ -23,6 +23,7 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
   ![Screenshot 2023-12-15 094659](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/502b2b63-6d21-4ecd-81f4-b86bca61ee81)
 
 - Kami menggunakan Digital Ocean sebagai lingkungan cloud yang akan kami gunakan. Berikut adalah tabel harga spesifikasi VM yang kami buat:
+  
   ![tabel_harga](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/tabelfix.png)
 
 ### Implementasi Arsitektur Cloud
