@@ -90,7 +90,7 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
 
   + Setelah masuk ke console, buatlah file bernama `app.py` dengan isi berupa salinan [app.py](https://github.com/fuaddary/fp-tka/blob/main/app.py) dari soal FP.
 
-    String yang digunakan pada app diubah menjadi string yang kita gunakan untuk mengakses database sebelumnya, namun dengan memberi tambahan ```/orders_db?authSource=admin``` agar app.py dapat melakukan autentikasi sekaligus terhubung dengan database users_db. Isi dari `app.py` akan menjadi seperti berikut:
+    String yang digunakan pada app diubah menjadi string yang kita gunakan untuk mengakses database sebelumnya, namun dengan memberi tambahan ```/orders_db?authSource=admin``` agar app.py dapat melakukan autentikasi sekaligus terhubung dengan database orders_db. Isi dari `app.py` akan menjadi seperti berikut:
 
     ![isi_apppy](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/apppyisi.png)
 
