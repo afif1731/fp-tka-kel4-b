@@ -65,18 +65,20 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
   Untuk memeriksa apakah database sudah berjalan, dilakukan percobaan akses menggunakan dua cara. Yaitu dengan menggunakan `mongosh` dan `MongoDB Compass`
 
   + `mongosh`
+
     Cukup masukkan perintah `mongosh` ke dalam console droplet. Apabila kemudian muncul text `test` pada bagian input, maka hal itu menunjukkan bahwa koneksi sudah berhasil dan kita sedang mengakses database `test`
 
     ![mongosh_tes](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/mongoshtes.png)
 
   + `MongoDB Compass`
+
     Untuk menggunakan compass, pastikan aplikasi **MongoDB Compass** sudah terinstall sebelumnya. Apabila telah terinstall, buat koneksi baru dan masukkan string link akses database yang sebelumnya ditunjukkan pada pesan login console
 
-   ![compass_tes](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes.png)
+    ![compass_tes](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes.png)
 
-   Apabila sudah berhasil terhubung, maka tampilan seharusnya berupa seperti ini
+    Apabila sudah berhasil terhubung, maka tampilan seharusnya berupa seperti ini
 
-   ![compass_res](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes2.png)
+    ![compass_res](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/compasstes2.png)
 
   Kemudian dibuat sebuah database baru sesuai dengan ketentuan soal FP dengan nama **orders_db** beserta collection **orders**. Database juga diisi dengan sejumlah dummy data yang dapat dibuat dari berbagai sumber di internet, salah satunya adalah melalui [Mockaroo](mockaroo.com).
    
