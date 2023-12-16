@@ -90,7 +90,7 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
 
   + Setelah masuk ke console, buatlah file bernama `app.py` dengan isi berupa salinan [app.py](https://github.com/fuaddary/fp-tka/blob/main/app.py) dari soal FP.
 
-    String yang digunakan pada app diubah menjadi string yang kita gunakan untuk mengakses database sebelumnya, namun dengan memberi tambahan '/users_db?authSource=admin' agar app.py dapat melakukan autentikasi sekaligus terhubung dengan database users_db. Isi dari `app.py` akan menjadi seperti berikut:
+    String yang digunakan pada app diubah menjadi string yang kita gunakan untuk mengakses database sebelumnya, namun dengan memberi tambahan ```/orders_db?authSource=admin``` agar app.py dapat melakukan autentikasi sekaligus terhubung dengan database users_db. Isi dari `app.py` akan menjadi seperti berikut:
 
     ![isi_apppy](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/apppyisi.png)
 
@@ -162,15 +162,72 @@ Pada suatu saat teman anda ingin mengajak anda memulai bisnis di bidang digital 
     ```
     Begitu dependensi selesai diinstall, maka app.py sudah siap untuk dijalankan.
 
-
     Untuk menjalankan `app.py` gunakan perintah berikut, tambahan `-D` tidak perlu digunakan agar aplikasi tidak berjalan secara daemon, hal ini digunakan agar saat testing kami dapat melakukan debugging dengan mudah.
     ```
     gunicorn --config gunicorn_config.py -D app:app
     ```
-    
-      
+    langkah-langkah ini dilakukan sekali lagi untuk pengaturan pada worker2
+
+- Load Balancer
+
+  Pembuatan load balancer menggunakan droplet dengan image nginx yang sudah tersedia di Digital Ocean.
+
+  ![create_nginx](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/createnginx.png)
+
+  Untuk mencegah akses dari user tidak dikenal, maka dibuatlah firewall yang hanya menerima request dari IPv4 terdaftar. Cara ini mungkin kurang efektif karena IPv4 dari user yang sama akan selalu berubah setiap beberapa jam, namun kami belum menemukan cara untuk mendaftarkan user tertentu pada firewall sedemikian rupa sehingga user dapat tetap mengakses meskipun IP-nya berubah.
+
+  Berikut adalah pengaturan firewall yang dipasang pada load balancer kami.
+
+  ![firewall_nginx](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/firewallnginx.png)
+
+  Setelah melakukan pemasangan firewall, masuk ke dalam console droplet seperti biasa. Di sana, program default nginx seharusnya sedang aktif, apabila tidak aktif maka ada kemungkinan bahwa terjadi kesalahan saat membuat droplet.
+
+  Kemudian dilakukan pengubahan default config nginx sehingga nginx dapat mengakses droplet worker1 dan 2 yang telah dibuat sebelumnya. Pengubahan config nginx dilakukan pada file `default.conf` yang dapat diakses melalui perintah berikut
+
+  ```
+  nano /etc/nginx/conf.d/default.conf
+  ```
+  isi dari `default.conf` diubah menjadi seperti berikut
+
+  ```
+  upstream app {
+    least conn;
+    server 165.232.170.202:80;
+    server 159.223.66.135:80;
+  }
+
+  server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+      proxy_pass http://app;
+    }
+  }
+  ```
+
+  Service Nginx kemudian dimatikan dan dinyalakan ulang dengan perintah berikut:
+  ```
+  systemctl stop nginx
+  ```
+  ```
+  systemctl start nginx
+  ```
+
+  Untuk memastikan service nginx telah aktif, gunakan
+  ```
+  systemctl status nginx
+  ```
+
+  Hasilnya adalah sebagai berikut:
+
+  ![status_nginx](https://github.com/afif1731/fp-tka-kel4-b/blob/main/gambars/statusnginx.png)
+
+  Setelah load balancer nginx berhasil dijalankan, maka keseluruhan arsitektur cloud telah dibuat dan siap untuk diuji.
    
 ### Pengujian Endpoint
+
+Semua pengujian diarahkan pada ip yang sama, yaitu `157.245.147.229`
 
 - Get All Orders
   ![Screenshot 2023-12-15 093931](https://github.com/afif1731/fp-tka-kel4-b/assets/128958228/870551b1-c5bb-4196-8de9-77bb48b6a07e)
